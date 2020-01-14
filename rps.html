@@ -1,0 +1,63 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Function scope example</title>
+</head>
+<body>
+    <script>
+        function computerPlay(){
+            let selection = Math.floor(Math.random() * 3)
+            switch(selection){
+                case 0:
+                    return "Rock";
+                case 1:
+                    return "Paper";
+                case 2:
+                    return "Scissors";
+            }
+        }
+        
+        function playRound(userPlay, compPlay){
+            userPlay = (userPlay.substring(0,1)).toUpperCase() + (userPlay.substring(1)).toLowerCase();
+
+            if (userPlay == compPlay){
+                return 0
+            }
+            else if ((userPlay == "Rock" && compPlay == "Scissors") || (userPlay == "Scissors" && compPlay == "Paper") || (userPlay == "Paper" && compPlay == "Rock")){
+                return 1
+            }
+            else
+                return -1
+        }
+
+        function game(){
+            var i;
+            let score = 0;
+            for(i = 0; i < 5; i++){
+                let userPlay = prompt("Make an RPS selection");
+                score = score + playRound(userPlay, computerPlay());
+            }
+            if (score == 0){
+                let replay = prompt("Tie game! Do you wanna play again?");
+                if (replay.toLowerCase() == "yes")
+                {
+                    game();
+                    return;
+                }
+                else{
+                    console.log("Tie game");
+                    return;
+                }
+            }
+            else if (score > 0){
+                console.log("You win! Congratulations");
+                return;
+            }
+            else{
+                console.log("You lose!")
+                return;
+            }
+        }
+    </script>
+</body>
+</html>
