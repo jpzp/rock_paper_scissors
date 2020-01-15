@@ -21,12 +21,15 @@
             userPlay = (userPlay.substring(0,1)).toUpperCase() + (userPlay.substring(1)).toLowerCase();
 
             if (userPlay == compPlay){
+                console.log("Tie! You both picked " + userPlay);
                 return 0
             }
             else if ((userPlay == "Rock" && compPlay == "Scissors") || (userPlay == "Scissors" && compPlay == "Paper") || (userPlay == "Paper" && compPlay == "Rock")){
+                console.log("You Win! " + userPlay + " beats " + compPlay);
                 return 1
             }
             else
+                console.log("You Lose! " + compPlay + " beats " + userPlay);
                 return -1
         }
 
@@ -50,11 +53,11 @@
                 }
             }
             else if (score > 0){
-                console.log("You win! Congratulations");
+                console.log("You win! Congratulations. Final Score: " + score);
                 return;
             }
             else{
-                console.log("You lose!")
+                console.log("You lose! Final Score: " + score);
                 return;
             }
         }
