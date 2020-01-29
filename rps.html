@@ -1,10 +1,34 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Function scope example</title>
+    <title>RPS</title>
 </head>
 <body>
+    <button id="rock">ROCK</button>
+    <button id="paper">PAPER</button>
+    <button id="scissors">SCISSORS</button>
+
+    <div>
+        <ul style= "list-style: none;">
+            <li id = "output">Select a button to start game</li>
+            <li id = "player"> Player Score:  </li>
+            <li id = "comp"> Computer Score: </li>
+        </ul>
+    </div>
+
+    
     <script>
+        const btn_R = document.querySelector('#rock');
+        const btn_P = document.querySelector('#paper');
+        const btn_S = document.querySelector('#scissors');
+
+        btn_R.onclick = () => playRound("Rock", computerPlay());
+        btn_P.onclick = () => playRound("Paper", computerPlay());
+        btn_S.onclick = () => playRound("Scissors", computerPlay());
+
+        playerScore = 0;
+        compScore = 0;
+
         function computerPlay(){
             let selection = Math.floor(Math.random() * 3)
             switch(selection){
@@ -18,49 +42,62 @@
         }
         
         function playRound(userPlay, compPlay){
-            userPlay = (userPlay.substring(0,1)).toUpperCase() + (userPlay.substring(1)).toLowerCase();
+            
+            const out = document.querySelector("#output"); 
+            const player = document.querySelector("#player");
+            const somp = document.querySelector('#comp');
+            
+            if(playerScore == 5){
+                if (confirm("You win! Would you like to play again?"))
+                {
+                    playerScore = 0;
+                    compScore = 0;
+                    out.textContent = "Select a button to start game";
+                    player.textContent = "Player Score: " + playerScore;
+                    comp.textContent = "Computer Score: " + compScore;
+                    return
+                }
+                else{
+                    out.textContent = "YOU HAVE WON! Refresh to start again"
+                    return;
+                }
+            }
+            if(compScore == 5){
+                if(confirm("You lose! Would you like to play again?")){
+                    playerScore = 0;
+                    compScore = 0;
+                    out.textContent = "Select a button to start game";
+                    player.textContent = "Player Score: " + playerScore;
+                    comp.textContent = "Computer Score: " + compScore;
+                    return
+                }
+                else{
+                    out.textContent = "YOU HAVE LOST! Refresh to start again"
+                    return;
+                }
+            }
 
             if (userPlay == compPlay){
-                console.log("Tie! You both picked " + userPlay);
+                out.textContent = ("Tie! You both picked " + userPlay);
+                player.textContent = "Player Score: " + playerScore;
+                comp.textContent = "Computer Score: " + compScore;
                 return 0
             }
             else if ((userPlay == "Rock" && compPlay == "Scissors") || (userPlay == "Scissors" && compPlay == "Paper") || (userPlay == "Paper" && compPlay == "Rock")){
-                console.log("You Win! " + userPlay + " beats " + compPlay);
+                out.textContent = ("You Win! " + userPlay + " beats " + compPlay);
+                player.textContent = "Player Score: " + ++playerScore;
+                comp.textContent = "Computer Score: " + compScore;
                 return 1
             }
             else
-                console.log("You Lose! " + compPlay + " beats " + userPlay);
+                out.textContent = ("You Lose! " + compPlay + " beats " + userPlay);
+                player.textContent = "Player Score: " + playerScore;
+                comp.textContent = "Computer Score: " + ++compScore;
                 return -1
+
+
         }
 
-        function game(){
-            var i;
-            let score = 0;
-            for(i = 0; i < 5; i++){
-                let userPlay = prompt("Make an RPS selection");
-                score = score + playRound(userPlay, computerPlay());
-            }
-            if (score == 0){
-                let replay = prompt("Tie game! Do you wanna play again?");
-                if (replay.toLowerCase() == "yes")
-                {
-                    game();
-                    return;
-                }
-                else{
-                    console.log("Tie game");
-                    return;
-                }
-            }
-            else if (score > 0){
-                console.log("You win! Congratulations. Final Score: " + score);
-                return;
-            }
-            else{
-                console.log("You lose! Final Score: " + score);
-                return;
-            }
-        }
     </script>
 </body>
 </html>
